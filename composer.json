@@ -1,0 +1,27 @@
+{
+    "name": "model/logging",
+    "description": "log model action",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Model\\Logging\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Model\\Logging\\": "test/"
+        }
+    },
+
+    "authors": [
+        {
+            "name": "anbozsultonov",
+            "email": "anboz98sultonov@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require-dev": {
+        "orchestra/testbench": "^7.5"
+    }
+}
