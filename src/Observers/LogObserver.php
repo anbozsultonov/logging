@@ -41,8 +41,8 @@ class LogObserver
         ])->info(json_encode([
             'action'     => $action,
             'table'      => $tableName,
-            'user_id'    => $user->id,
-            'user_email' => $user->email,
+            'user_id'    => $user->id ?? null,
+            'user_email' => $user->email ?? null,
             'old_data'   => $oldData,
             'new_data'   => $newData
         ], JSON_THROW_ON_ERROR));
