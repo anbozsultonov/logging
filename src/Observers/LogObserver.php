@@ -11,41 +11,42 @@ class LogObserver
 {
     public function creating(Model $model): void
     {
-        $this->log('creating', $model);
+        $newData = $model->toArray();
+
+        $this->log('creating', $model, $newData);
     }
 
     public function updating(Model $model): void
     {
-        $this->log('updating', $model);
+        $newData = $model->getDirty();
+        $oldData = $this->getOldData($newData, $model);
+
+        $this->log('updating', $model, $newData, $oldData);
     }
 
 
     public function deleting(Model $model): void
     {
-        $this->log('deleting', $model);
+        $this->log('deleting', $model, [], $model->toArray());
     }
 
-    private function log(string $action, Model $model): void
+    private function log(string $action, Model $model, $newData, $oldData = []): void
     {
         $tableName = $model->getTable();
+
         $user = Auth::user();
-        $newData = $model->getDirty();
-        $oldData = [];
-        if ($action === 'updating') {
-            $oldData = $this->getOldData($newData, $model);
-        }
 
         Log::build([
             'driver' => 'daily',
             'bubble' => false,
             'path' => storage_path("logs/{$tableName}/logs.log")
         ])->info(json_encode([
-            'action'     => $action,
-            'table'      => $tableName,
-            'user_id'    => $user->id ?? null,
+            'action' => $action,
+            'table' => $tableName,
+            'user_id' => $user->id ?? null,
             'user_email' => $user->email ?? null,
-            'old_data'   => $oldData,
-            'new_data'   => $newData
+            'old_data' => $oldData,
+            'new_data' => $newData
         ], JSON_THROW_ON_ERROR));
     }
 
@@ -55,7 +56,7 @@ class LogObserver
         $originalData = $model->getOriginal();
 
         foreach ($newData as $key => $d) {
-            if($key === 'updated_at') {
+            if ($key === 'updated_at') {
                 continue;
             }
 
