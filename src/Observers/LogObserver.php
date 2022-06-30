@@ -19,10 +19,6 @@ class LogObserver
         $this->log('updating', $model);
     }
 
-    public function saving(Model $model): void
-    {
-        $this->log('saving', $model);
-    }
 
     public function deleting(Model $model): void
     {
