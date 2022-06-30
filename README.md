@@ -1,7 +1,9 @@
 ## modelaudit/logging
 
-#installing
-**composer require modelaudit/logging**
+**installing**
+````
+composer require modelaudit/logging**
+````
 # Use
 ````
 
