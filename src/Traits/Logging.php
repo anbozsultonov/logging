@@ -6,7 +6,7 @@ use Model\Logging\Observers\LogObserver;
 
 trait Logging
 {
-    public static function bootLoggingTrait(): void
+    public static function bootLogging(): void
     {
         static::observe(LogObserver::class);
     }
