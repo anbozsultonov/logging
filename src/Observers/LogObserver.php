@@ -33,10 +33,10 @@ class LogObserver
     {
         $tableName = $model->getTable();
         $user = Auth::user();
-        $newData = $model->toArray();
+        $newData = $model->getDirty();
         $oldData = [];
         if ($action === 'updating') {
-            $oldData = $this->getOldData($model->getDirty(), $model);
+            $oldData = $this->getOldData($newData, $model);
         }
 
         Log::build([
