@@ -19,6 +19,11 @@ class LogObserver
         $this->log('updating', $model);
     }
 
+    public function saving(Model $model): void
+    {
+        $this->log('updating', $model);
+    }
+
     public function deleting(Model $model): void
     {
         $this->log('deleting', $model);
@@ -51,14 +56,14 @@ class LogObserver
     private function getOldData(array $newData, Model $model): array
     {
         $oldData = [];
-        $arr = $model->getOriginal();
+        $originalData = $model->getOriginal();
 
         foreach ($newData as $key => $d) {
             if($key === 'updated_at') {
                 continue;
             }
 
-            $oldData[$key] = $arr[$key];
+            $oldData[$key] = $originalData[$key];
         }
 
         return $oldData;
